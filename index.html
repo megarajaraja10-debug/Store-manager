@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inventory Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #dashboard {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        #dashboard div {
+            font-size: 1.1em;
+        }
+
+        #controls {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #controls > * {
+            margin: 0 5px;
+        }
+
+        button {
+            padding: 6px 12px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .low-stock {
+            color: red;
+            font-weight: bold;
+        }
+
+        .adequate-stock {
+            color: green;
+            font-weight: bold;
+        }
+
+        /* Modal styles */
+        #product-modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        #modal-content {
+            background: white;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            position: relative;
+            box-shadow: 0 0 15px #333;
+        }
+
+        #modal-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.4em;
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        form input {
+            width: 100%;
+            padding: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            margin-top: 15px;
+            width: 100%;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        form button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+
+<body>
+    <script src="app.js"></script>
+    <h1>Inventory Management</h1>
+
+    <div id="dashboard">
+        <div>Total Inventory Value: <span id="total-value">$0.00</span></div>
+        <div>Low Stock Items: <span id="low-stock-count">0</span></div>
+        <div>Total Products: <span id="total-products">0</span></div>
+    </div>
+
+    <div id="controls">
+        <button id="add-product-btn">Add New Product</button>
+
+        <div>
+            <input type="text" id="search-input" placeholder="Search by name or category" />
+            <button id="search-btn">Search</button>
+            <button id="clear-search-btn">Clear</button>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Cost Price</th>
+                <th>Selling Price</th>
+                <th>Total Value</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="inventory-body">
+            <!-- Inventory items will be rendered here -->
+        </tbody>
+    </table>
+
+    <!-- Modal for Add/Edit Product -->
+    <div id="product-modal">
+        <div id="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Add New Product</h2>
+            <form id="product-form">
+                <input type="hidden" id="product-id" />
+                
+                <label for="product-name">Name</label>
+                <input type="text" id="product-name" required />
+
+                <label for="product-category">Category</label>
+                <input type="text" id="product-category" required />
+
+                <label for="product-quantity">Quantity</label>
+                <input type="number" id="product-quantity" min="0" required />
+
+                <label for="product-cost">Cost Price ($)</label>
+                <input type="number" id="product-cost" min="0" step="0.01" required />
+
+                <label for="product-price">Selling Price ($)</label>
+                <input type="number" id="product-price" min="0" step="0.01" required />
+
+                <button type="submit">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
